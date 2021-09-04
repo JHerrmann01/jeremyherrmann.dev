@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<title>eBoy | E-Commerce</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+		<!-- <script src="jquery/jquery.min.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/bootstrap.min.js"></script>
+		<link rel="icon" href="images/icon.png" type="image/x-icon" />
+		 -->
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+	</head>
+  <style>
+    .btn-dark {
+      color: #fff;
+      background-color: #333;
+      border-color: #343a40;
+    }
+
+    .btn-dark:hover {
+      color: #fff;
+      background-color: #23272b;
+      border-color: #1d2124;
+    }
+
+    .btn-dark:focus, .btn-dark.focus {
+      -webkit-box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+      box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+    }
+
+    .btn-dark.disabled, .btn-dark:disabled {
+      color: #fff;
+      background-color: #343a40;
+      border-color: #343a40;
+    }
+
+    .btn-dark:not(:disabled):not(.disabled):active, .btn-dark:not(:disabled):not(.disabled).active,
+    .show > .btn-dark.dropdown-toggle {
+      color: #fff;
+      background-color: #1d2124;
+      border-color: #171a1d;
+    }
+
+    .btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus,
+    .show > .btn-dark.dropdown-toggle:focus {
+      -webkit-box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+      box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+    }
+  </style>
+
+	<body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{url_for('CSE305_eBoyEmployeeHomepage')}}">eBoy</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          {% if CanEditInventory %}
+            <h4>Item Name</h4>
+            <input type="text" id="itemName" value="{{ CurrentItem['Name'] }}" placeholder="Item Name"></input>
+          {% else %}
+            <h1> {{ CurrentItem['Name'] }} </h1>
+          {% endif %}
+        </div>
+
+        <!-- Item Detail Section -->
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-4 text-center">
+          <h2>Description:</h2>
+            {% if CanEditInventory %}
+              <textarea style="resize: none;" rows=4 cols=25 id="itemDesc" placeholder="Item Description" >{{ CurrentItem['Description'] }}</textarea>
+            {% else %}
+              <h4>
+                {{ CurrentItem['Description'] }}
+              </h4>
+            {% endif %}
+          <h2>Price: </h2>
+          {% if CanEditInventory %}
+  				    <input type="text" id="itemPrice" placeholder="Item Price" value="{{ CurrentItem['Price']}}"></input>
+          {% else %}
+            <h4>
+              {{ CurrentItem['Price'] }}
+            </h4>
+          {% endif %}
+        </div>
+        <div class="col-lg-4 text-center">
+          <h2>Quantity Available: </h2>
+          {% if CanEditInventory %}
+              <input type="text" id="itemQuantity" placeholder="Quantity" value="{{ CurrentItem['Quantity']}}"></input>
+          {% else %}
+            <h4>
+              {{ CurrentItem['Quantity'] }}
+            </h4>
+          {% endif %}
+          <h2>Categories: </h2>
+          <h4>
+            <ul style="text-align: center !important; list-style-position: inside;">
+              {% if CurrentItem['GROUP_CONCAT(Type.TypeName)'] %}
+                {% for category in CurrentItem['GROUP_CONCAT(Type.TypeName)'].split(",") %}
+                  <li>{{ category }}</li>
+                {% endfor %}
+              {% endif %}
+            </ul>
+          </h4>
+        </div>
+        <div class="col-lg-2">
+        </div>
+      </div>
+      {% if CanEditInventory %}
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button id="update_item_button" class="btn btn-primary">Update Item</button>
+          </div>
+        </div>
+      {% endif %}
+      <hr>
+      <div class="row">
+        <!-- Review Sections -->
+        <div class="col-lg-12 text-center">
+          <h1> Reviews: </h1>
+
+          <div class="row">
+            <div class="col-md-2 text-left">
+            </div>
+            {% set counter = [1] %}
+            {% for review in Reviews %}
+              <div class="col-md-4 text-left">
+                <h4>{{ review['Username'] }}</h4>
+                <h5>Rating: {{ review['Rating'] }} stars</h5>
+                <h5>
+                  {{ review['Description'] }}
+                </h5>
+                <h6>
+                  Review left on {{ review['ReviewDateTime'] }}
+                </h6>
+                {% if CanRemoveReview %}
+                  <button class="btn btn-danger" onclick="removeReview('{{ review['ReviewID'] }}')">Remove Review</button>
+                {% endif %}
+                <hr>
+              </div>
+
+              {% set temp_count = counter.pop() %}
+              {% if (temp_count % 2 == 0) and temp_count != 0 %}
+                <div class="col-md-2 text-left">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 text-left">
+                </div>
+              {% endif %}
+
+              {% if counter.append(temp_count + 1) %}
+              {% endif %}
+
+            {% endfor %}
+            <div class="col-md-2 text-left">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    function removeReview(ReviewID){
+  		$.ajax({
+  			url: "{{url_for('CSE305_remove_review')}}",
+  			data: {
+  				"ReviewID":ReviewID
+  			},
+  			type: 'POST',
+  			success: function(response) {
+  				console.log("Resp: " + response);
+  				document.location.reload();
+  			},
+  			error: function(response) {
+  				console.log("Resp: " + response);
+  			}
+  		});
+  	}
+
+    $("#update_item_button").click(function(){
+			$.ajax({
+	      url: "{{url_for('CSE305_update_item')}}",
+	      data: {
+          "itemID": {{ CurrentItem['ItemID'] }},
+					"itemName": $("#itemName").val(),
+					"itemDesc": $("#itemDesc").val(),
+					"itemQuantity": $("#itemQuantity").val(),
+					"itemPrice": $("#itemPrice").val()
+				},
+	      type: 'POST',
+	      success: function(response) {
+					console.log("Resp: " + response);
+					document.location.reload();
+	      },
+				error: function(response) {
+					console.log("Resp: " + response);
+				}
+	    });
+		});
+  </script>
+</html>

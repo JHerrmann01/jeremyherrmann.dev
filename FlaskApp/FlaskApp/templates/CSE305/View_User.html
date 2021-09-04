@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<title>Employee</title>
+</head>
+<body>
+	<div class="row">
+		<div class="text-center col-md-12">
+			<h2>Employee - View User</h2>
+			<h4>Viewing {{ User }}</h4>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6 text-center">
+			<h3>
+				User's Information
+			</h3>
+			<hr>
+			<h4>
+				First Name: {{ User['FirstName'] }}
+			</h4>
+			<h4>
+				Last Name: {{ User['LastName'] }}
+			</h4>
+			<h4>
+				Username: {{ User['Username'] }}
+			</h4>
+			<h4>
+				Email Address: {{ User['Email'] }}
+			</h4>
+			<hr>
+			{% if CanRemoveUser %}
+			<button class="btn btn-primary" id="remove_user_button" name="remove_user_button">Remove User</button>
+			{% endif %}
+		</div>
+		<div class="col-md-3">
+		</div>
+	</div>
+</body>
+<script>
+	$("#remove_user_button").click(function(){
+		$.ajax({
+			url: "{{url_for('CSE305_remove_user')}}",
+			data: {
+				"UserID":"{{ User['UserID'] }}"
+			},
+			type: 'POST',
+			success: function(response) {
+				console.log("Resp: " + response);
+				// document.location.reload();
+			},
+			error: function(response) {
+				console.log("Resp: " + response);
+			}
+		});
+	});
+</script>
+
+</html>

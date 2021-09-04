@@ -1,0 +1,40 @@
+{% extends "CSE305/header.html" %}
+{% block body %}
+<div class="container-fluid">
+  {% if Popular_Items != [] %}
+    <div class="row">
+      <h2 class="text-center">Featured Items</h2>
+      {% for popular_item in Popular_Items %}
+        <div class="col-md-4 text-center">
+          <h3>{{ popular_item['Name'] }} - ${{ popular_item['Price'] }}</h3>
+          <h4 style="max-height: 50% !important;">{{ popular_item['Description'] }}</h4>
+          <a href="{{ url_for('CSE305_display_item') }}?itemID={{ popular_item['ItemID'] }}" class="btn btn-primary">Check it out!</a>
+        </div>
+      {% endfor %}
+    </div>
+    <hr>
+  {% endif %}
+  {% if Items == [] %}
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h2>At this time, there are no items available!</h2>
+        <h4>Please widen your range of options, or check in again later for any updates!</h4>
+        <h4>We are sorry for this inconvenience.</h4>
+      </div>
+    </div>
+  {% else %}
+    {% if Items != [] %}
+      <div class="row">
+      <h2 class="text-center">All Available Items</h2>
+      {% for item in Items %}
+        <div class="col-md-4 text-center">
+          <h3>{{ item['Name'] }} - ${{ item['Price'] }}</h3>
+          <h4 style="max-height: 50% !important;">{{ item['Description'] }}</h4>
+          <a href="{{ url_for('CSE305_display_item') }}?itemID={{ item['ItemID'] }}" class="btn btn-primary">Check it out!</a>
+        </div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

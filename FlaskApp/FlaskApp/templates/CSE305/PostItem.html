@@ -1,0 +1,86 @@
+{% extends "CSE305/header.html" %}
+{% block body %}
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h2 class="text-uppercase">Post Items</h2>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2 text-center">
+			</div>
+
+			<div class="col-md-4 text-center">
+				<h5>Item Name:</h5>
+				<br>
+				<input type="text" id="itemName" placeholder="Item Name"></input>
+				<hr>
+				<h5>Item Description:</h5>
+				<br>
+				<textarea style="resize: none;" rows=4 cols=25 id="itemDesc" placeholder="Item Description"></textarea>
+			</div>
+
+			<div class="col-md-4 text-center">
+				<h5>Item Price:</h5>
+				<br>
+				<input type="text" id="itemPrice" placeholder="Item Price"></input>
+				<hr>
+				<h5>Item Quantity:</h5>
+				<input type="text" id="itemQuantity" placeholder="Quantity"></input>
+			</div>
+
+			<div class="col-md-2 text-center">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h5>Item Categories:</h5>
+				{% for category in Categories %}
+					<h4 style="display: inline-block; padding:10px; !important">
+						<input id="{{ category['TypeID'] }}" type="checkbox">{{ category['TypeName'] }}</input>
+					</h4>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-5 text-center">
+			</div>
+
+			<div class="col-md-2 text-center">
+				<button id="submit_item_button" style="width: 100% !important;" class="btn btn-primary">Submit Item!</button>
+			</div>
+
+			<div class="col-md-5 text-center">
+			</div>
+		</div>
+	</div>
+	<script>
+		$("#submit_item_button").click(function(){
+			$.ajax({
+	      url: "{{url_for('CSE305_upload_item')}}",
+	      data: {
+					"itemName": $("#itemName").val(),
+					"itemDesc": $("#itemDesc").val(),
+					"itemQuantity": $("#itemQuantity").val(),
+					"itemPrice": $("#itemPrice").val(),
+					{% for category in Categories %}
+						"CATEGORY-{{ category['TypeID'] }}":$("#{{ category['TypeID'] }}").prop("checked"),
+					{% endfor %}
+				},
+	      type: 'POST',
+	      success: function(response) {
+					console.log("Resp: " + response);
+					document.location.reload();
+	      },
+				error: function(response) {
+					console.log("Resp: " + response);
+				}
+	    });
+		});
+	</script>
+
+{% endblock %}

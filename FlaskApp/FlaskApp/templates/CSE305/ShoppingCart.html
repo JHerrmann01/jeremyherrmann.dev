@@ -1,0 +1,92 @@
+{% extends "CSE305/header.html" %}
+{% block body %}
+<div class="container-fluid">
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-8">
+          {% if AllItems == [] %}
+            <div class="col-md-12 text-center">
+              <h2>Begin by adding items to your shopping cart!</h2>
+              <hr>
+            </div>
+          {% else %}
+            {% for item in AllItems %}
+              <div class="row">
+                <div class="col-md-4">
+                  <h4><a href="/item/thingy/">{{ item['Name'] }}</a></h4>
+                </div>
+                <div class="col-md-4">
+                  <h4>Quantity: {{ item['Quantity'] }}</h4>
+                </div>
+                <div class="col-md-4">
+                  <h4>Price Per Unit: ${{ item['Price'] }}</h4>
+                </div>
+              </div>
+              <hr>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        <div class="col-md-4">
+          <h4>Shipping Information.</h4>
+          <textarea class="form-control" id="shippingInformation" rows="5"></textarea>
+          <hr>
+          <h4>Shipping Address.</h4>
+          <input class="form-control" id="address" rows="5"></input>
+          <hr>
+          <h4>Your card information is as shown below.</h4>
+          <h5>You can change this in your profile.</h5>
+          {% if (PaymentInfo['CardNum'] != "") and (PaymentInfo['CVC'] != "") and (PaymentInfo['Expiration'] != "") %}
+            <h5>Card Number: {{ PaymentInfo['CardNum'] }}</h5>
+            <h5>Expiration: {{ PaymentInfo['Expiration'] }}</h5>
+            <h5>CVV: {{ PaymentInfo['CVC'] }}</h5>
+          {% else %}
+            <h5>Information is not complete -- Please Update the information</h5>
+          {% endif %}
+          <hr>
+          {% set total = [0] %}
+          {% for item in AllItems %}
+            {% if total.append(total.pop() + item['(PRICE*QUANTITY)']) %}{% endif %}
+          {% endfor %}
+          <h4>Total Price: ${{ total.pop() }}</h4>
+          {% if (PaymentInfo['CardNum'] != "") and (PaymentInfo['CVC'] != "") and (PaymentInfo['Expiration'] != "") %}
+            <button id="checkout_button" class="btn btn-primary">Complete your order</button>
+          {% else %}
+            <h5>Once you update the payment information, you will be able to complete your order.</h5>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#checkout_button").click(function(){
+    $.ajax({
+      url: "{{url_for('CSE305_checkout')}}",
+      data: {
+        "address": $("#address").val(),
+        "shippingInfo": $("#shippingInformation").val()
+      },
+      type: 'POST',
+      success: function(response) {
+        console.log("Resp: " + response);
+        document.location.reload();
+      },
+      error: function(response) {
+        console.log("Resp: " + response);
+      }
+    });
+  });
+</script>
+{% endblock %}

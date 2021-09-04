@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Jeremy Herrmann | Developer</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link href="https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- Plugin CSS -->
+  <link href="../static/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="../static/css/creativeUpdated.css" rel="stylesheet">
+  <link href="../static/css/homepageUpdated.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+  <!-- Initial Screen users will see -->
+  <header class="masthead" id="home">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center justify-content-center text-center">
+        <div class="col-lg-12 align-self-end">
+          <h1 class="text-white font-weight-bold">Jeremy Herrmann</h1>
+        </div>
+        <div class="col-lg-12 align-self-baseline">
+          <a class="text-white btn btn-square js-scroll-trigger" id="contactButton" href="#">Resume & Portfolio  <i style="padding-left: 15px; height: 100%;" class="fas fa-arrow-right"></i></a>
+
+          <!-- <h3 class="text-white font-weight-bold" id="welcomeText"></h3> -->
+          <!-- <a class="text-white btn btn-xl btn-square js-scroll-trigger startInvisible" id="contactButton" href="#contact">Contact</a> -->
+          <!-- <a class="text-white btn btn-xl btn-square js-scroll-trigger startInvisible" id="portfolioButton" href="#portfolio">Portfolio</a> -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-dark py-3 navbar-scrolled" style="border-bottom: white 1px solid;" id="mainNav">
+    <div class="container">
+      <button class="navbar-toggler navbar-toggler-right navbar-scrolled" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto mr-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">About Me</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#courses">Courses</a>
+          </li>
+
+          <li class="nav-item header_divider">
+            <a class="nav-link no-pointer-action">|</a>
+          </li>
+
+          <!-- <li class="nav-item sbu_logo">
+            <img class="img-fluid" style="width:40px; height:48px;" src="../static/img/sbu_logo.png" alt="">
+          </li> -->
+
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#resume">Resume</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contact&nbsp</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-section bg-white" id="about">
+    <div style="width: 100% !important;">
+      <h1 id = "ABOUT_HEADER"    class="text-center text-dark">ABOUT</h1>
+      <hr id = "ABOUT_UNDERLINE" class="divider dark my-8">
+      <div class="container">
+        <div id="ABOUT_INFORMATION" class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col" style="text-align:center;">
+                <div id="hexagon-background" class="hexagon-wrapper">
+                  <div id="hexagon-color" class="hexagon">
+                    <i class="mdi mdi-school"></i>
+                  </div>
+                </div>
+                <h5 class="font-weight-bold text-gray">Education</h5>
+                <h7 class="text-gray" style="font-size: 14px;">
+                  I am currently pursuing a double major in Computer Science and Applied Mathematics at Stony Brook University.
+                </h7>
+              </div>
+              <div class="col" style="text-align:center;">
+                <div id="hexagon-background" class="hexagon-wrapper">
+                  <div id="hexagon-color" class="hexagon">
+                    <i class="mdi mdi-cellphone-link"></i>
+                  </div>
+                </div>
+                <h5 class="font-weight-bold text-gray">Software Engineering</h5>
+                <h7 class="text-gray" style="font-size: 14px;">
+                  While studying, I've had the unbelievable opportunity of working at Zebra Technologies for the past year and a half.
+                </h7>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col" style="text-align:center;">
+                <div id="hexagon-background" class="hexagon-wrapper">
+                  <div id="hexagon-color" class="hexagon">
+                    <i class="mdi mdi-lightbulb-on"></i>
+                  </div>
+                </div>
+                <h5 class="font-weight-bold text-gray">Innovation</h5>
+                <h7 class="text-gray" style="font-size: 14px;">
+                  In my free time, I enjoy working on exciting projects to gain practical experience and learn new skills I can apply in the future.
+                </h7>
+              </div>
+              <div class="col" style="text-align:center;">
+                <div id="hexagon-background" class="hexagon-wrapper">
+                  <div id="hexagon-color" class="hexagon">
+                    <i class="mdi mdi-brain"></i>
+                  </div>
+                </div>
+                <h5 class="font-weight-bold text-gray">Machine Learning</h5>
+                <h7 class="text-gray" style="font-size: 14px;">
+                  Throughout my future studies, I hope to work on interesting projects based around machine learning and artificial intelligence.
+                </h7>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+
+
+      <!-- <div class="flex row label-wrap">
+        <div class="flex row-gt-sm">
+        <div class="flex bullet-wrap ">
+          <div class="hex-wrap waypoint" data-animation="flip-in-x">
+            <div class="hexagon">
+              <i class="mdi mdi-speedometer"></i>
+            </div>
+          </div>
+          <div class="waypoint" data-animation="fade-in">
+            <div class="label bold">Fast</div>
+            <div>Fast load times and lag free interaction, my highest priority.</div>
+          </div>
+        </div>
+
+        <div class="flex bullet-wrap " >
+          <div class="hex-wrap waypoint" data-animation="flip-in-x" data-delay=".2s">
+            <div class="hexagon">
+              <i class="mdi mdi-cellphone-link"></i>
+            </div>
+          </div>
+          <div class="waypoint" data-animation="fade-in" data-delay=".2s">
+            <div class="label bold">Responsive</div>
+            <div>My layouts will work on any device, big or small.</div>
+          </div>
+        </div>
+        </div>
+        <div class="flex row-gt-sm">
+          <div class="flex bullet-wrap " >
+            <div class="hex-wrap waypoint" data-animation="flip-in-x" data-delay=".4s">
+              <div class="hexagon">
+                <i class="mdi mdi-lightbulb-outline"></i>
+              </div>
+            </div>
+            <div class="waypoint" data-animation="fade-in" data-delay=".4s">
+              <div class="label bold">Intuitive</div>
+              <div>Strong preference for easy to use, intuitive UX/UI.</div>
+            </div>
+          </div>
+
+          <div class="flex bullet-wrap " >
+            <div class="hex-wrap waypoint" data-animation="flip-in-x" data-delay=".6s">
+              <div class="hexagon">
+                <i class="mdi mdi-rocket"></i>
+              </div>
+            </div>
+            <div class="waypoint" data-animation="fade-in" data-delay=".6s">
+              <div class="label bold">Dynamic</div>
+              <div>Websites don't have to be static, I love making pages come to life.</div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+
+      <!-- <div class = "container">
+        <h4>
+
+        </h4>
+      </div>
+
+      <div class = "container">
+
+
+      </div> -->
+
+
+
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+
+  </section>
+
+
+  <footer class="page-footer font-small special-color-dark bg-dark pt-4" style="border-top: white 1px solid;">
+    <div class="container">
+      <ul class="list-unstyled list-inline text-center">
+        <li class="list-inline-item">
+          <a class="li-ic">
+            <i style="padding-left: 10px; padding-right: 10px;" class="fab fa-linkedin-in fa-inverse fa-lg white-text fa-2x"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="ins-ic">
+            <i style="padding-left: 10px; padding-right: 10px;" class="fab fa-github fa-inverse fa-lg white-text fa-2x"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="tw-ic">
+            <i style="padding-left: 10px; padding-right: 10px;" class="fab fa-twitter fa-inverse fa-lg white-text fa-2x"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="ins-ic">
+            <i style="padding-left: 10px; padding-right: 10px;" class="fab fa-instagram fa-inverse fa-lg white-text fa-2x"> </i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="footer-copyright text-white text-center py-3">
+      Copyright &copy; 2019 - Jeremy Herrmann
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="../static/js/creative.js"></script>
+  <script src="../static/js/homepageUpdated.js"></script>
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script>
+
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  }
+
+
+  $.fn.isOnScreen = function(){
+      var win = $(window);
+
+      var viewport = {
+          top : win.scrollTop(),
+          left : win.scrollLeft()
+      };
+      viewport.right = viewport.left + win.width();
+      viewport.bottom = viewport.top + win.height();
+
+      var bounds = this.offset();
+      bounds.right = bounds.left + this.outerWidth();
+      bounds.bottom = bounds.top + this.outerHeight();
+
+      return( viewport.right >= bounds.left && viewport.left <= bounds.right && viewport.bottom >= bounds.top )
+      // return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+  };
+
+  var isInsideView = false;
+
+  $(document).ready(function(){
+    $('#ABOUT_HEADER').hide();
+    $('#ABOUT_UNDERLINE').hide();
+    $('#ABOUT_INFORMATION').hide();
+
+    $(window).scroll(function(){
+        if ($('#ABOUT_HEADER').isOnScreen() && !isInsideView) {
+          $('#ABOUT_HEADER').toggle( "slide", 1200 );
+          $('#ABOUT_UNDERLINE').toggle( "slide", 1200 );
+          $('#ABOUT_INFORMATION').toggle( "fold" , 1500);
+
+
+
+          isInsideView = true;
+        } else {
+            // The element is NOT visible, do something else
+        }
+    });
+  });
+
+  </script>
+
+</body>
+
+</html>

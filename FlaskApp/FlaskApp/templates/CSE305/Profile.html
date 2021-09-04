@@ -1,0 +1,115 @@
+{% extends "CSE305/header.html" %}
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3 text-center">
+				<h3>
+					User Information
+				</h3>
+				<hr>
+				<h4>
+					First Name: {{ User['FirstName'] }}
+				</h4>
+				<hr>
+				<h4>
+					Last Name: {{ User['LastName'] }}
+				</h4>
+				<hr>
+				<h4>
+					Username: {{ User['Username'] }}
+				</h4>
+				<hr>
+				<h4>
+					Email Address: {{ User['Email'] }}
+				</h4>
+				<hr>
+			</div>
+
+			<div class="col-md-3 text-center">
+				<h3>
+					Payment Information
+				</h3>
+				<hr>
+				<h4>
+					Card Number:
+				</h4>
+				<input id="cardNum" type="text" value="{{ PaymentInfo['CardNum'] }}">
+				</input>
+				<hr>
+				<h4>
+					CVC:
+				</h4>
+				<input id="cvc" type="text" value="{{ PaymentInfo['CVC'] }}">
+				</input>
+				<hr>
+				<h4>
+					Expiration:
+				</h4>
+			  <input id="expiration" type="text" value="{{ PaymentInfo['Expiration'] }}">
+			  </input>
+				<hr>
+				<button id="update_payment" class="btn btn-primary">
+					Update
+				</button>
+				<hr>
+			</div>
+
+			<div class="col-md-3 text-center">
+				<h3>
+					All Orders
+				</h3>
+				<hr>
+
+				{% if Orders %}
+					{% for order in Orders %}
+						<a href="{{ url_for('CSE305_viewOrder') }}?OrderID={{ order['OrderID'] }}" class="text-secondary"><h4>Order ID: {{ order['OrderID'] }}</h4></a>
+						<h5>Order Time: {{ order['OrderDateTime'] }}</h5>
+						<hr>
+					{% endfor %}
+				{% endif %}
+			</div>
+
+			<div class="col-md-3 text-center">
+				<h3>
+					Current Listings
+				</h3>
+				<hr>
+				{% if CurrentListing %}
+					{% for listing in CurrentListing %}
+						<a href="{{ url_for('CSE305_display_item') }}?itemID={{ listing['ItemID'] }}">
+							<h5>
+								{{ listing['Name'] }}
+							</h5>
+						</a>
+						<h5>
+							{{ listing['Description'] }}
+						</h5>
+						<hr>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	</body>
+	<script>
+	  $("#update_payment").click(function(){
+      $.ajax({
+	      url: "{{url_for('CSE305_update_payment')}}",
+	      data: {
+          "cardNum": $("#cardNum").val(),
+					"expiration": $("#expiration").val(),
+          "cvc": $("#cvc").val()
+				},
+	      type: 'POST',
+	      success: function(response) {
+					console.log("Resp: " + response);
+					document.location.reload();
+	      },
+				error: function(response) {
+					console.log("Resp: " + response);
+				}
+	    });
+	  });
+	</script>
+
+{% endblock %}

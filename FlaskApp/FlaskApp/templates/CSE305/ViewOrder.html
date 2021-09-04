@@ -1,0 +1,78 @@
+{% extends "CSE305/header.html" %}
+{% block body %}
+<style>
+  .btn-dark {
+    color: #fff;
+    background-color: #333;
+    border-color: #343a40;
+  }
+
+  .btn-dark:hover {
+    color: #fff;
+    background-color: #23272b;
+    border-color: #1d2124;
+  }
+
+  .btn-dark:focus, .btn-dark.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+  }
+
+  .btn-dark.disabled, .btn-dark:disabled {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+  }
+
+  .btn-dark:not(:disabled):not(.disabled):active, .btn-dark:not(:disabled):not(.disabled).active,
+  .show > .btn-dark.dropdown-toggle {
+    color: #fff;
+    background-color: #1d2124;
+    border-color: #171a1d;
+  }
+
+  .btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-dark.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+  }
+</style>
+<div class="container-fluid">
+  {% if Order != [] %}
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <h1> Order ID - {{ Order[0]['OrderID']}} </h1>
+    </div>
+    <!-- Item Detail Section -->
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-8 text-center">
+      {% for orderEntry in Order %}
+      <hr>
+      <div class="row text-center">
+        <div class="col-md-6">
+          <h4>{{ orderEntry['Name'] }}</h4>
+          <h4>{{ orderEntry['Description'] }}</h4>
+        </div>
+        <div class="col-md-6">
+          <h4>Order contained {{ orderEntry['Quantity'] }} at {{ orderEntry['Price'] }} each </h4>
+          <h4>Delivery Date: {{ orderEntry['DeliveryDateTime'] }}</h4>
+          <h4>Address: {{ orderEntry['Address'] }}</h4>
+          <h4>Shipping Information: {{ orderEntry['ShippingInfo'] }}</h4>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-lg-2">
+    </div>
+  </div>
+  <hr>
+  {% else %}
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h3> This order does not exist!</h3>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

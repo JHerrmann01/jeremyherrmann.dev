@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<title>Employee</title>
+</head>
+<body>
+	<div class="row">
+		<div class="text-center col-md-12">
+			<h2>&nbspEmployee Profile</h2>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-4">
+			<p>&nbspName: {{ Employee['Username'] }}</p>
+			<p>&nbspRole: {{ Employee['RoleName'] }}</p>
+			<p>&nbspPermissions:
+				{% for permission in Permissions %}
+					<ul>
+						<li>
+							{{ permission['PermissionDescription'] }}
+						</li>
+					</ul>
+				{% endfor %}
+			</p>
+		</div>
+		<div class="col-md-4">
+			<p>&nbspImmediate Superior: {{ Employee['ManagerUsername']}}</p>
+			<p>&nbspSubordinates:
+				{% for subordinate in Subordinates %}
+					<ul>
+						<li>
+							{{ subordinate['Username'] }}
+							{% if CanRemoveEmployee %}
+								<br>
+								<button class="btn btn-danger" onclick="removeEmployee('{{ subordinate['EmployeeID'] }}')">Remove</button>
+							{% endif %}
+						</li>
+					</ul>
+				{% endfor %}
+			</p>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+	{% if CanAddEmployee %}
+	<hr>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 text-center">
+			<h4>Add Employee: </h4>
+			<form>
+			  <div class="form-group">
+			    <label for="EmployeeUsername">Employee Username</label>
+			    <input type="text" class="form-control" id="EmployeeUsername" placeholder="Employee Username">
+			  </div>
+			  <div class="form-group">
+			    <label for="EmployeePassword">Employee Password</label>
+			    <input type="password" class="form-control" id="EmployeePassword" placeholder="Employee Password">
+			  </div>
+				<br>
+				<h5>Select Role: </h5>
+				<div class="btn-group btn-group-toggle" data-toggle="buttons">
+					{% for role in AllRanks %}
+							<h6 style="display: inline-block; padding:10px; !important">
+								<input type="radio" autocomplete="off" name="options" id="{{ role['RoleID'] }}">&nbsp{{ role['RoleName'] }}</input>
+							</h6>
+					{% endfor %}
+				</div>
+				<br>
+			</form>
+			<button id="addEmployeeButton" class="btn btn-primary">Submit</button>
+		</div>
+	</div>
+	{% endif %}
+	{% if CanViewUser %}
+	<hr>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 text-center">
+			<h4>View User: </h4>
+			<form>
+			  <div class="form-group">
+			    <label for="ViewUsername">Search by Username</label>
+			    <input type="text" class="form-control" id="ViewUsername" placeholder="Username">
+			  </div>
+				<br>
+			</form>
+			<button id="viewUserButton" class="btn btn-primary">Submit</button>
+		</div>
+	</div>
+	<div class="row text-center">
+		<div class="col-md-12">
+			<h4>All Sellers: </h4>
+		</div>
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<div class="row">
+				{% for seller in AllSellers %}
+					<div class="col-md-3">
+						<h3><a class="text-secondary" href="{{ url_for('CSE305_View_User') }}?Username={{ seller['Username'] }}">{{ seller['Username'] }}</a></h3>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% if CanChangePermissions %}
+	<hr>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 text-center">
+			<h4>Change Permissions: </h4>
+			{% for role in AllRanks %}
+			<div style="display: inline-block;" class="text-left">
+					<h6>{{ role['RoleName'] }}</h6>
+					<ul>
+						{% for permission in Permissions %}
+							<input id="{{ role['RoleID'] }}-{{ permission['PermissionID'] }}" type="checkbox">{{ permission['PermissionDescription']}}</input>
+							<br>
+						{% endfor %}
+					</ul>
+					<button class="btn btn-primary" onclick="updatePermissions('{{ role['RoleID'] }}')">Update Permissions</button>
+					<hr>
+				<br>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+	{% if CanEditInventory %}
+	<hr>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 text-center">
+			<a href="{{ url_for('CSE305_employeeInventoryView') }}"><button class="btn btn-primary">Monitor the Inventory</button></a>
+		</div>
+	</div>
+	{% endif %}
+	<hr>
+</body>
+<script>
+	$("#addEmployeeButton").click(function(){
+		if($("#EmployeeUsername").val().trim() == ""){
+			alert("Enter username!");
+			return;
+		}
+		if($("#EmployeePassword").val().trim() == ""){
+			alert("Enter password!");
+			return;
+		}
+		if( ($("input[name='options']:checked").attr('id')+"") === "undefined" ){
+			alert("Select Rank!");
+			return;
+		}
+
+		$.ajax({
+			url: "{{url_for('CSE305_Add_Employee')}}",
+			data: {
+				"employeeUsername":$("#EmployeeUsername").val().trim(),
+				"employeePassword":$("#EmployeePassword").val().trim(),
+				"employeeRank": $("input[name='options']:checked").attr('id')
+			},
+			type: 'POST',
+			success: function(response) {
+				console.log("Resp: " + response);
+				document.location.reload();
+			},
+			error: function(response) {
+				console.log("Resp: " + response);
+			}
+		});
+	});
+
+	$("#viewUserButton").click(function(){
+		if($("#ViewUsername").val().trim() == ""){
+			alert("Enter username!");
+			return;
+		}
+		window.location.assign("https://jeremyherrmann.dev{{ url_for('CSE305_View_User') }}?Username="+$("#ViewUsername").val().trim());
+	});
+
+	function updatePermissions(Role){
+		console.log(Role);
+		$.ajax({
+			url: "{{url_for('CSE305_change_permissions')}}",
+			data: {
+				{% for permission in Permissions %}
+					"Permission-{{ permission['PermissionID'] }}":$("#" + Role + "-{{ permission['PermissionID'] }}").is(":checked"),
+				{% endfor %}
+				"Role": Role
+			},
+			type: 'POST',
+			success: function(response) {
+				console.log("Resp: " + response);
+				// document.location.reload();
+			},
+			error: function(response) {
+				console.log("Resp: " + response);
+			}
+		});
+	}
+	function removeEmployee(EmployeeID){
+		$.ajax({
+			url: "{{url_for('CSE305_remove_employee')}}",
+			data: {
+				"EmployeeID":EmployeeID
+			},
+			type: 'POST',
+			success: function(response) {
+				console.log("Resp: " + response);
+				document.location.reload();
+			},
+			error: function(response) {
+				console.log("Resp: " + response);
+			}
+		});
+	}
+
+</script>
+
+</html>

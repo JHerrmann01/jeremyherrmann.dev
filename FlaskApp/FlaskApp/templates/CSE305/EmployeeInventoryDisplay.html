@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<title>eBoy | E-Commerce</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+		<!-- <script src="jquery/jquery.min.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/bootstrap.min.js"></script>
+		<link rel="icon" href="images/icon.png" type="image/x-icon" />
+		 -->
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="{{url_for('CSE305_eBoyEmployeeHomepage')}}">eBoy</a>
+		    </div>
+		  </div>
+		</nav>
+
+    <div class="container-fluid">
+      {% if Items == [] %}
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h2>At this time, there are no items available!</h2>
+            <h4>Please widen your range of options, or check in again later for any updates!</h4>
+            <h4>We are sorry for this inconvenience.</h4>
+          </div>
+        </div>
+      {% else %}
+        {% if Items != [] %}
+          <div class="row">
+          <h2 class="text-center">All Available Items</h2>
+          {% for item in Items %}
+            <div class="col-md-4 text-center">
+              <h3>{{ item['Name'] }} - ${{ item['Price'] }}</h3>
+              <h4 style="max-height: 50% !important;">{{ item['Description'] }}</h4>
+              <a href="{{ url_for('CSE305_display_item') }}?itemID={{ item['ItemID'] }}" class="btn btn-primary">Check it out!</a>
+              <br>
+              <br>
+              <button class="btn btn-danger" onclick="removeItem('{{ item['ItemID'] }}')">Delete</button>
+            </div>
+          {% endfor %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </body>
+  <script>
+
+    function removeItem(ItemID){
+  		$.ajax({
+  			url: "{{url_for('CSE305_remove_item')}}",
+  			data: {
+  				"ItemID":ItemID
+  			},
+  			type: 'POST',
+  			success: function(response) {
+  				console.log("Resp: " + response);
+  				document.location.reload();
+  			},
+  			error: function(response) {
+  				console.log("Resp: " + response);
+  			}
+  		});
+  	}
+  </script>
+</html>

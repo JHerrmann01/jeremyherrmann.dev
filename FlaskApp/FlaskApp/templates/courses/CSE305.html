@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Jeremy Herrmann | {{ course[0] }}</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+  <!-- Font Awesome Icons -->
+  <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- Plugin CSS -->
+  <link href="../../static/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="../../static/css/creative.css" rel="stylesheet">
+  <link href="../../static/css/homepage.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 navbar-scrolled" id="mainNav">
+    <div class="container w-100 text-center">
+      <ul class="navbar-nav ml-auto mr-auto my-2 my-lg-0">
+        <li class="nav-item">
+          {{ course[1][1] }}
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="masthead bg-primary h-100">
+    <div class="container h-auto">
+      <div class="row h-100">
+        <div class="col-lg-12 align-self-start align-items-center justify-content-center text-center">
+          <h2 class="text-white header_sans_font">{{ course[0] }}</h2>
+          <h5 class="text-white">
+            Principles of Database Systems focuses on the student's ability to write SQL, convert SQL to relational agebra, and create database systems which can be used on a large scale.
+          </h5>
+          <hr class="text-white bg-white">
+        </div>
+        <div class="col-lg-12">
+          <h6 class="text-white">
+            <ul>
+              <li>
+                This course covers topics which are necessary for database developers to understand and take advantage of such as
+                <ul class="small">
+                  <li>
+                    ER-Modeling
+                  </li>
+                  <li>
+                    Functional Dependencies & Constraints
+                  </li>
+                  <li>
+                    Normal Forms & Converting Schemas into 3NF or BCNF
+                  </li>
+                  <li>
+                    Relational Algebra & Conversion into SQL
+                  </li>
+                  <li>
+                    Triggers and Active Databases
+                  </li>
+                  <li>
+                    Transactions & DBMS
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Throughout the semester, the assignments consisted of a three part project.
+                <ul class="small">
+                  <li>
+                    The first assignment was to design an ER-Model for an E-Commerce application, which we would be implementing in the next two assignments.
+                  </li>
+                  <li>
+                    Next, the second assignment was to implement the ER-Model we designed in the previous assignment as SQL relations with all the appropriate constraints.
+                  </li>
+                  <li>
+                    The final assignment was to integrate the previously created SQL relations with a web application to make a fully working application which uses all the knowledge gained over the semester!
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Overall, this course has allowed students to make relations which are efficient, by converting relations from lower normal forms into higher normal forms through lossless decomposition.
+              </li>
+            </ul>
+          </h6>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Footer -->
+  <footer class="bg-light py-5">
+    <div class="container">
+      <div class="small text-center text-muted ">Copyright &copy; 2019 - Jeremy Herrmann</div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="../../static/js/creative.js"></script>
+  <script src="../../static/js/homepage.js"></script>
+
+</body>
+
+</html>

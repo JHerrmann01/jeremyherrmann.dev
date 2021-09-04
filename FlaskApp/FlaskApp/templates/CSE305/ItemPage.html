@@ -1,0 +1,195 @@
+{% extends "CSE305/header.html" %}
+{% block body %}
+<style>
+  .btn-dark {
+    color: #fff;
+    background-color: #333;
+    border-color: #343a40;
+  }
+
+  .btn-dark:hover {
+    color: #fff;
+    background-color: #23272b;
+    border-color: #1d2124;
+  }
+
+  .btn-dark:focus, .btn-dark.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+  }
+
+  .btn-dark.disabled, .btn-dark:disabled {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+  }
+
+  .btn-dark:not(:disabled):not(.disabled):active, .btn-dark:not(:disabled):not(.disabled).active,
+  .show > .btn-dark.dropdown-toggle {
+    color: #fff;
+    background-color: #1d2124;
+    border-color: #171a1d;
+  }
+
+  .btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-dark.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+  }
+</style>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <h1> {{ CurrentItem['Name'] }} </h1>
+    </div>
+
+    <!-- Item Detail Section -->
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-4 text-center">
+      <h2>Description:</h2>
+      <h4>
+        {{ CurrentItem['Description'] }}
+      </h4>
+      <h2>Price: </h2>
+      <h4>
+        {{ CurrentItem['Price'] }}
+      </h4>
+    </div>
+    <div class="col-lg-4 text-center">
+      <h2>Quantity Available: </h2>
+      <h4>
+        {{ CurrentItem['Quantity'] }}
+      </h4>
+      <h2>Categories: </h2>
+      <h4>
+        <ul style="text-align: center !important; list-style-position: inside;">
+          {% if CurrentItem['GROUP_CONCAT(Type.TypeName)'] %}
+            {% for category in CurrentItem['GROUP_CONCAT(Type.TypeName)'].split(",") %}
+              <li>{{ category }}</li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </h4>
+    </div>
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-12 text-center">
+      <button id="add_to_cart" class="btn btn-primary">Add to cart!</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <!-- Review Sections -->
+    <div class="col-lg-12 text-center">
+      <h1> Reviews: </h1>
+      {{ review }}
+
+      <div class="row">
+        <div class="col-md-2 text-left">
+        </div>
+        {% set counter = [1] %}
+        {% for review in Reviews %}
+          <div class="col-md-4 text-left">
+            <h4>{{ review['Username'] }}</h4>
+            <h5>Rating: {{ review['Rating'] }} stars</h5>
+            <h5>
+              {{ review['Description'] }}
+            </h5>
+            <h6>
+              Review left on {{ review['ReviewDateTime'] }}
+            </h6>
+            <hr>
+          </div>
+
+          {% set temp_count = counter.pop() %}
+          {% if (temp_count % 2 == 0) and temp_count != 0 %}
+            <div class="col-md-2 text-left">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2 text-left">
+            </div>
+          {% endif %}
+
+          {% if counter.append(temp_count + 1) %}
+          {% endif %}
+
+        {% endfor %}
+        <div class="col-md-2 text-left">
+        </div>
+        <div class="col-lg-12 text-center">
+          <h3>Leave a review!</h3>
+          <textarea style="resize: none;" rows=6 cols=75 id="review" placeholder="Write your description here :)"></textarea>
+          <br>
+          <h5 style="display: inline-block;">Rating:</h5>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-dark">
+              <input type="radio" name="options" id="1" autocomplete="off" checked> 1 Star
+            </label>
+            <label class="btn btn-dark">
+              <input type="radio" name="options" id="2" autocomplete="off"> 2 Stars
+            </label>
+            <label class="btn btn-dark active">
+              <input type="radio" name="options" id="3" autocomplete="off"> 3 Stars
+            </label>
+            <label class="btn btn-dark">
+              <input type="radio" name="options" id="4" autocomplete="off"> 4 Stars
+            </label>
+            <label class="btn btn-dark">
+              <input type="radio" name="options" id="5" autocomplete="off"> 5 Stars
+            </label>
+          </div>
+          <br>
+          <br>
+          <button id="submit_review_button" class="btn btn-primary">Submit Review!</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+    </div>
+  </div>
+</div>
+<script>
+  $("#submit_review_button").click(function(){
+    if($("#review").val().trim() === ""){
+      return;
+    }else{
+      $.ajax({
+	      url: "{{url_for('CSE305_submit_review')}}",
+	      data: {
+          "itemID": "{{ CurrentItem['ItemID'] }}",
+					"reviewContent": $("#review").val().trim(),
+          "rating": $("input[name='options']:checked").attr('id'),
+				},
+	      type: 'POST',
+	      success: function(response) {
+					console.log("Resp: " + response);
+					document.location.reload();
+	      },
+				error: function(response) {
+					console.log("Resp: " + response);
+				}
+	    });
+    }
+  });
+
+  $("#add_to_cart").click(function(){
+    // alert("ItemID {{ CurrentItem['ItemID'] }}");
+    $.ajax({
+      url: "{{url_for('CSE305_add_to_cart')}}",
+      data: {
+        "itemID": "{{ CurrentItem['ItemID'] }}",
+      },
+      type: 'POST',
+      success: function(response) {
+        alert("Adding the item to your cart!");
+        console.log("Resp: " + response);
+      },
+      error: function(response) {
+        console.log("Resp: " + response);
+      }
+    });
+  });
+</script>
+{% endblock %}
