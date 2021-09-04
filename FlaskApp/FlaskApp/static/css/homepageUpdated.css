@@ -1,0 +1,51 @@
+.btn.btn-square {
+  display: inline-flex;
+  align-items: center;
+  border: 2px white solid;
+  border-radius: 0;
+}
+
+.startInvisible{
+  visibility: hidden;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: #fff;
+}
+
+@media (max-width: 991px) {
+   /* .sbu_logo {
+     display: none;
+     visibility: hidden;
+   } */
+
+   .header_divider {
+     display: none;
+     visibility: hidden;
+   }
+
+   #mainNav .navbar-nav .nav-item .nav-link {
+     color: #6c757d;
+   }
+}
+
+@media (max-width: 446px) {
+   #welcomeText {
+     font-size:25px;
+   }
+}
+
+.no-pointer-action {
+  pointer-events: none;
+}
+
+#blinker {
+  border-right: .05em solid;
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}
